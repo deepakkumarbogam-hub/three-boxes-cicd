@@ -1,10 +1,9 @@
-name: Three Boxes CI
+name: Three Boxes CI/CD
 
 on:
   push:
     branches:
       - main
-
   workflow_dispatch:
 
 permissions:
@@ -36,3 +35,40 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/three-boxes-cicd:${{ github.sha }}
             ${{ secrets.DOCKERHUB_USERNAME }}/three-boxes-cicd:latest
+
+  deploy:
+    name: Deploy to EC2
+    needs: build-and-push
+    runs-on: self-hosted
+
+    steps:
+      - name: Deploy new container
+        env:
+          IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/three-boxes-cicd:${{ github.sha }}
+        run: |
+          set -e
+
+          echo "Pulling new image: $IMAGE"
+          docker pull "$IMAGE"
+
+          echo "Replacing existing application container"
+          docker rm -f box-app || true
+
+          docker run -d \
+            --name box-app \
+            --restart unless-stopped \
+            -p 8080:80 \
+            "$IMAGE"
+
+          echo "Waiting for application to start"
+          for i in $(seq 1 15); do
+            if curl --fail --silent http://localhost:8080/ > /dev/null; then
+              echo "Deployment successful!"
+              exit 0
+            fi
+            sleep 2
+          done
+
+          echo "Application health check failed"
+          docker logs box-app
+          exit 1
