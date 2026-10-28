@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three Boxes - DevOps CI/CD Project</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 35px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .box {
+            width: 180px;
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .box1 {
+            background: #2563eb;
+        }
+
+        .box2 {
+            background: #16a34a;
+        }
+
+        .box3 {
+            background: #9333ea;
+        }
+
+        .version {
+            margin-top: 35px;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 8px;
+            color: #334155;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>My DevOps Project</h1>
+
+    <p class="subtitle">
+        Automated CI/CD using Docker, GitHub Actions and Kubernetes
+    </p>
+
+    <div class="container">
+        <div class="box box1">Box 1</div>
+        <div class="box box2">Box 2</div>
+        <div class="box box3">Box 3</div>
+    </div>
+
+    <div class="version">
+        Application Version: <strong>v1</strong>
+    </div>
+</body>
+</html>
